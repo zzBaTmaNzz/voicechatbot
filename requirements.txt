@@ -3,3 +3,4 @@ groq
 SpeechRecognition
 streamlit-audiorecorder
 ffmpeg-python
+gtts
