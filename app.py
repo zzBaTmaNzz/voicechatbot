@@ -121,28 +121,15 @@ def generate_response(question):
         return "I'm having trouble formulating a response. Could you ask that in a different way?"
 
 def text_to_speech(text):
-    """ElevenLabs TTS with Streamlit Cloud fixes"""
     try:
-        url = "https://api.elevenlabs.io/v1/text-to-speech/3gsg3cxXyFLcGIfNbM6C"
-        headers = {
-            "xi-api-key": "sk_c8a6620db6c6fab25623d3d7662980d2676a63f5bb69f59a",  # Use secrets.toml
-            "Content-Type": "application/json"
-        }
-        data = {
-            "text": text,
-            "voice_settings": {"stability": 0.5, "similarity_boost": 0.75}
-        }
-        
-        response = requests.post(url, json=data, headers=headers)
-        
-        if response.status_code == 200:
-            st.audio(response.content, format="audio/mp3")
-            return True
-        else:
-            st.error(f"ElevenLabs Error: {response.text}")
-            return False
+        tts = gTTS(text=text, lang='en')
+        audio_bytes = io.BytesIO()
+        tts.write_to_fp(audio_bytes)
+        audio_bytes.seek(0)
+        st.audio(audio_bytes, format='audio/mp3')
+        return True
     except Exception as e:
-        st.error(f"Voice error: {e}")
+        st.error(f"TTS Error: {e}")
         return False
 # Streamlit UI
 st.title("🎙️Interview Voice Bot")
