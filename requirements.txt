@@ -3,5 +3,4 @@ groq
 gtts
 SpeechRecognition
 streamlit-audiorecorder
-requests
-pydub
+
