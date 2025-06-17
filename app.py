@@ -161,7 +161,7 @@ if len(audio) > 0:
             # Convert to speech
             audio_file = text_to_speech(response)
             if audio_file:
-                st.audio(audio_file)
+                st.write("Response Generated")
             else:
                 st.warning("Couldn't generate voice response")
     else:
