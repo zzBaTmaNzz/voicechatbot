@@ -3,4 +3,6 @@ groq
 gtts
 SpeechRecognition
 streamlit-audiorecorder
-
+pydub
+soundfile>=0.12.1
+librosa>=0.10.0
