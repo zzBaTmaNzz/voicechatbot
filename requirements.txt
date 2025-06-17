@@ -1,7 +1,7 @@
-streamlit==1.32.0
-groq==0.3.0
-gtts==2.4.0
-SpeechRecognition==3.10.0
-streamlit-audiorecorder==0.0.3
-requests==2.31.0
-pydub==0.25.1
+streamlit
+groq
+gtts
+SpeechRecognition
+streamlit-audiorecorder
+requests
+pydub
