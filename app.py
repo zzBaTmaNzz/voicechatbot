@@ -138,38 +138,22 @@ def text_to_speech(text, filename="response.mp3"):
         return filename
     return None
 
-def save_audio(audio_bytes):
-    """Alternative audio saving for cloud deployment"""
-    try:
-        import wave
-        import numpy as np
-        import soundfile as sf
-        
-        # Convert to numpy array
-        audio_array = np.frombuffer(audio_bytes, dtype=np.int16)
-        
-        # Save as WAV
-        temp_file = "temp_audio.wav"
-        sf.write(temp_file, audio_array, 44100, format='WAV')
-        return temp_file
-    except Exception as e:
-        st.error(f"Couldn't process audio: {e}")
-        return None
-        
 # Streamlit UI
 st.title("🎙️Interview Voice Bot")
 st.write("Press the microphone button and ask your question")
 
 # Voice recording
-try:
-    audio = audiorecorder("Click to record", "Click to stop recording")
-    if len(audio) > 0:
-        audio_bytes = audio.export().read()
-        audio_file = save_audio(audio_bytes)
-        
-        if audio_file:
-            st.audio(audio_bytes)
-            question = transcribe_audio(audio_file)
+audio = audiorecorder("Click to record", "Click to stop recording")
+
+if len(audio) > 0:
+    # To play audio in frontend:
+    st.audio(audio.export().read())
+
+    # To save audio to a file:
+    audio.export("input.wav", format="wav")
+
+    # Transcribe audio
+    question = transcribe_audio("input.wav")
 
     if question:
         st.info(f"Your question: {question}")
@@ -187,5 +171,3 @@ try:
                 st.warning("Couldn't generate voice response")
     else:
         st.error("Sorry, I couldn't understand the audio. Please try speaking clearly again.")
-except:
-    st.error("Couldn't Record")
