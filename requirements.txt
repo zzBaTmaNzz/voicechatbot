@@ -1,6 +1,5 @@
 streamlit
 groq
-gtts
 SpeechRecognition
 streamlit-audiorecorder
 ffmpeg-python
