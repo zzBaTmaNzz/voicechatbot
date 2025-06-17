@@ -187,3 +187,5 @@ try:
                 st.warning("Couldn't generate voice response")
     else:
         st.error("Sorry, I couldn't understand the audio. Please try speaking clearly again.")
+except:
+    st.error("Couldn't Record")
