@@ -5,6 +5,7 @@ import speech_recognition as sr
 from audiorecorder import audiorecorder
 import requests
 from groq import Groq
+from gtts import gTTS
 
 # Initialize Groq client
 groq_client = Groq(api_key="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")  # Replace with your Groq API key
