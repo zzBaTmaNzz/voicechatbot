@@ -120,24 +120,30 @@ def generate_response(question):
         print(f"API Error: {e}")
         return "I'm having trouble formulating a response. Could you ask that in a different way?"
 
-def text_to_speech(text, filename="response.mp3"):
-    """Convert text to speech using ElevenLabs API"""
-    url = "https://api.elevenlabs.io/v1/text-to-speech/3gsg3cxXyFLcGIfNbM6C"
-    headers = {
-        "xi-api-key": "sk_c8a6620db6c6fab25623d3d7662980d2676a63f5bb69f59a",  # Replace with your ElevenLabs API key
-        "Content-Type": "application/json"
-    }
-    data = {
-        "text": text,
-        "voice_settings": {"stability": 0.5, "similarity_boost": 0.75}
-    }
-    response = requests.post(url, json=data, headers=headers)
-    if response.status_code == 200:
-        with open(filename, "wb") as f:
-            f.write(response.content)
-        return filename
-    return None
-
+def text_to_speech(text):
+    """ElevenLabs TTS with Streamlit Cloud fixes"""
+    try:
+        url = "https://api.elevenlabs.io/v1/text-to-speech/3gsg3cxXyFLcGIfNbM6C"
+        headers = {
+            "xi-api-key": "sk_c8a6620db6c6fab25623d3d7662980d2676a63f5bb69f59a",  # Use secrets.toml
+            "Content-Type": "application/json"
+        }
+        data = {
+            "text": text,
+            "voice_settings": {"stability": 0.5, "similarity_boost": 0.75}
+        }
+        
+        response = requests.post(url, json=data, headers=headers)
+        
+        if response.status_code == 200:
+            st.audio(response.content, format="audio/mp3")
+            return True
+        else:
+            st.error(f"ElevenLabs Error: {response.text}")
+            return False
+    except Exception as e:
+        st.error(f"Voice error: {e}")
+        return False
 # Streamlit UI
 st.title("🎙️Interview Voice Bot")
 st.write("Press the microphone button and ask your question")
