@@ -9,7 +9,7 @@ from gtts import gTTS
 import io
 
 # Initialize Groq client
-groq_client = Groq(api_key="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")  # Replace with your Groq API key
+groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])  # Replace with your Groq API key
 
 # Personality configuration - REPLACE WITH YOUR DETAILS
 PERSONALITY_PROMPT = """You are Prabhav Jain, responding to interview questions. Maintain these characteristics:
